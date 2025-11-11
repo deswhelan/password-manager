@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 
 USER_EMAIL_ADDRESS = "wheland6@gmail.com"
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -11,11 +12,14 @@ def save():
     email_username = entry_email_username.get()
     password = entry_password.get()
 
-    # TODO: stretch - write to file outside project
-    with open("data.txt", mode="a") as data_file:
-        data_file.write(f"{website} | {email_username} | {password}\n")
+    is_ok = messagebox.askokcancel(title="Confirm Details", message=f"Save the details below for {website}?\n\nEmail/Username: {email_username}\n\nPassword: {password}")
 
-    reset_form()
+    if is_ok:
+        # TODO: stretch - write to file outside project
+        with open("data.txt", mode="a") as data_file:
+            data_file.write(f"{website} | {email_username} | {password}\n")
+
+        reset_form()
 
 def reset_form():
     entry_website.delete(0, "end")
