@@ -6,20 +6,35 @@ USER_EMAIL_ADDRESS = "wheland6@gmail.com"
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
-    # TODO: stretch - check for values before saving
+    if form_is_valid():
+        website = entry_website.get()
+        email_username = entry_email_username.get()
+        password = entry_password.get()
+
+        is_ok = messagebox.askokcancel(title="Confirm Details", message=f"Save the details below for {website}?\n\nEmail/Username: {email_username}\n\nPassword: {password}")
+
+        if is_ok:
+            # TODO: stretch - write to file outside project
+            with open("data.txt", mode="a") as data_file:
+                data_file.write(f"{website} | {email_username} | {password}\n")
+
+            reset_form()
+
+def form_is_valid():
+    entry_dict = {
+        "website": entry_website.get(),
+        "email/username": entry_email_username.get(),
+        "password": entry_password.get()
+    }
+
+    for entry in entry_dict:
+        if len(entry_dict[entry]) < 1:
+            messagebox.showwarning(title="Form incomplete", message=f"Please enter {entry}")
+            return False
+
     # TODO: stretch - check for existing entry for a given website before saving
-    website = entry_website.get()
-    email_username = entry_email_username.get()
-    password = entry_password.get()
 
-    is_ok = messagebox.askokcancel(title="Confirm Details", message=f"Save the details below for {website}?\n\nEmail/Username: {email_username}\n\nPassword: {password}")
-
-    if is_ok:
-        # TODO: stretch - write to file outside project
-        with open("data.txt", mode="a") as data_file:
-            data_file.write(f"{website} | {email_username} | {password}\n")
-
-        reset_form()
+    return True
 
 def reset_form():
     entry_website.delete(0, "end")
