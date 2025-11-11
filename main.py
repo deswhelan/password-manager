@@ -75,7 +75,7 @@ entry_password.grid(column=2, row=4)
 button_add = Button(width=38, text="Add", command=save)
 button_add.grid(column=2, row=5, columnspan=2)
 
-button_generate_password = Button(text="Generate", command=generate_password)
+button_generate_password = Button(text="Generate", command= lambda: generate_password(entry_password))
 button_generate_password.grid(column=3, row=4)
 
 window.mainloop()
