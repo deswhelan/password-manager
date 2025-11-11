@@ -5,19 +5,13 @@ NUMBERS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 SYMBOLS = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
 def generate_password(entry_password):
-    letter_count = random.randint(8, 10)
-    symbol_count = random.randint(2, 4)
-    number_count = random.randint(2, 4)
-
-    char_list = ([random.choice(LETTERS) for _ in range(letter_count)]
-                 + [random.choice(SYMBOLS) for _ in range(symbol_count)]
-                 + [random.choice(NUMBERS) for _ in range(number_count)])
+    char_list = ([random.choice(LETTERS) for _ in range(random.randint(8, 10))]
+                 + [random.choice(SYMBOLS) for _ in range(random.randint(2, 4))]
+                 + [random.choice(NUMBERS) for _ in range(random.randint(2, 4))])
 
     random.shuffle(char_list)
 
-    password = ""
-    for char in char_list:
-      password += char
+    password = "".join(char_list)
 
     entry_password.delete(0, "end")
     entry_password.insert(0, password)
