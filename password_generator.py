@@ -1,3 +1,4 @@
+import pyperclip
 import random
 
 LETTERS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -10,8 +11,11 @@ def generate_password(entry_password):
                  + [random.choice(NUMBERS) for _ in range(random.randint(2, 4))])
 
     random.shuffle(char_list)
-
     password = "".join(char_list)
 
+    # populate password field with new password
     entry_password.delete(0, "end")
     entry_password.insert(0, password)
+
+    # copy new password to clipboard
+    pyperclip.copy(password)
