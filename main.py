@@ -34,17 +34,15 @@ def save():
                     # handle empty json file
                     except JSONDecodeError:
                         data = {}
+                    finally:
+                        # update with new data and write/save
+                        with open("data.json", mode="w") as data_file:
+                            data.update(new_data)
+                            json.dump(data, data_file, indent=4)
             # handle no json file
             except FileNotFoundError:
-                print("FileNotFound exception handled")
                 with open("data.json", mode="w") as data_file:
-                    json.dump({}, data_file)
-                    data = {}
-
-            # update with new data and write/save
-            with open("data.json", mode="w") as data_file:
-                data.update(new_data)
-                json.dump(data, data_file, indent=4)
+                    json.dump(new_data, data_file, indent=4)
 
             reset_form()
 
