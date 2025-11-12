@@ -1,4 +1,6 @@
 import json
+from json import JSONDecodeError
+
 from password_generator import generate_password
 from tkinter import *
 from tkinter import messagebox
@@ -25,8 +27,19 @@ def save():
             # TODO: add data file(s) to gitignore
             # TODO: stretch - write to file outside project
             # read existing data
-            with open("data.json", mode="r") as data_file:
-                data = json.load(data_file)
+            try:
+                with open("data.json", mode="r") as data_file:
+                    try:
+                        data = json.load(data_file)
+                    # handle empty json file
+                    except JSONDecodeError:
+                        data = {}
+            # handle no json file
+            except FileNotFoundError:
+                print("FileNotFound exception handled")
+                with open("data.json", mode="w") as data_file:
+                    json.dump({}, data_file)
+                    data = {}
 
             # update with new data and write/save
             with open("data.json", mode="w") as data_file:
