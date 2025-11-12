@@ -1,3 +1,4 @@
+import json
 from password_generator import generate_password
 from tkinter import *
 from tkinter import messagebox
@@ -11,12 +12,26 @@ def save():
         email_username = entry_email_username.get()
         password = entry_password.get()
 
+        new_data = {
+            website: {
+                "email/username": email_username,
+                "password": password
+            }
+        }
+
         is_ok = messagebox.askokcancel(title="Confirm Details", message=f"Save the details below for {website}?\n\nEmail/Username: {email_username}\n\nPassword: {password}")
 
         if is_ok:
+            # TODO: add data file(s) to gitignore
             # TODO: stretch - write to file outside project
-            with open("data.txt", mode="a") as data_file:
-                data_file.write(f"{website} | {email_username} | {password}\n")
+            # read existing data
+            with open("data.json", mode="r") as data_file:
+                data = json.load(data_file)
+
+            # update with new data and write/save
+            with open("data.json", mode="w") as data_file:
+                data.update(new_data)
+                json.dump(data, data_file, indent=4)
 
             reset_form()
 
