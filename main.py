@@ -10,18 +10,19 @@ def find_password():
     try:
         with open("data.json", mode="r") as data_file:
             data = json.load(data_file)
-            website_name = entry_website.get()
-
-            try:
-                website_details = data[website_name]
-            except KeyError:
-                messagebox.showinfo(title="Not found", message=f"No password found for website \"{website_name}\"")
-            else:
-                # TODO: stretch - show password in entry_password and copy to clipboard
-                messagebox.showinfo(title=website_name, message=f"Email/username: {website_details["email/username"]}\nPassword: {website_details["password"]}")
-
     except FileNotFoundError:
         messagebox.showerror(title="Error", message="No data file found!")
+    else:
+        website_name = entry_website.get()
+        # TODO: stretch - convert to if/else instead of try/except
+        try:
+            website_details = data[website_name]
+        except KeyError:
+            messagebox.showinfo(title="Not found", message=f"No password found for website \"{website_name}\"")
+        else:
+            # TODO: stretch - show password in entry_password and copy to clipboard
+            messagebox.showinfo(title=website_name, message=f"Email/username: {website_details["email/username"]}\nPassword: {website_details["password"]}")
+
 
 def save():
     if form_is_valid():
