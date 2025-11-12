@@ -7,6 +7,9 @@ from tkinter import messagebox
 
 USER_EMAIL_ADDRESS = "wheland6@gmail.com"
 
+def find_password():
+    print("search fired!")
+
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
     if form_is_valid():
@@ -26,10 +29,10 @@ def save():
         if is_ok:
             # TODO: add data file(s) to gitignore
             # TODO: stretch - write to file outside project
-            # read existing data
             try:
                 with open("data.json", mode="r") as data_file:
                     try:
+                        # read existing data
                         data = json.load(data_file)
                     # handle empty json file
                     except JSONDecodeError:
@@ -87,9 +90,9 @@ label_email_username.grid(column=1, row=3, sticky=E)
 label_password = Label(text="Password:")
 label_password.grid(column=1, row=4, sticky=E)
 
-entry_website = Entry(width=45)
+entry_website = Entry(width=35)
 entry_website.focus()
-entry_website.grid(column=2, row=2, columnspan=2)
+entry_website.grid(column=2, row=2)
 
 entry_email_username = Entry(width=45)
 entry_email_username.insert(0, USER_EMAIL_ADDRESS)
@@ -98,10 +101,13 @@ entry_email_username.grid(column=2, row=3, columnspan=2)
 entry_password = Entry(width=35)
 entry_password.grid(column=2, row=4)
 
-button_add = Button(width=38, text="Add", command=save)
-button_add.grid(column=2, row=5, columnspan=2)
+button_search = Button(width=7, text="Search", command=find_password)
+button_search.grid(column=3, row=2)
 
 button_generate_password = Button(text="Generate", command= lambda: generate_password(entry_password))
 button_generate_password.grid(column=3, row=4)
+
+button_add = Button(width=38, text="Add", command=save)
+button_add.grid(column=2, row=5, columnspan=2)
 
 window.mainloop()
