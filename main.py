@@ -1,6 +1,5 @@
 import json
 from json import JSONDecodeError
-
 from password_generator import generate_password
 from tkinter import *
 from tkinter import messagebox
@@ -8,9 +7,22 @@ from tkinter import messagebox
 USER_EMAIL_ADDRESS = "wheland6@gmail.com"
 
 def find_password():
-    print("search fired!")
+    try:
+        with open("data.json", mode="r") as data_file:
+            data = json.load(data_file)
+            website_name = entry_website.get()
 
-# ---------------------------- SAVE PASSWORD ------------------------------- #
+            try:
+                website_details = data[website_name]
+            except KeyError:
+                messagebox.showinfo(title="Not found", message=f"No password found for website \"{website_name}\"")
+            else:
+                # TODO: stretch - show password in entry_password and copy to clipboard
+                messagebox.showinfo(title=website_name, message=f"Email/username: {website_details["email/username"]}\nPassword: {website_details["password"]}")
+
+    except FileNotFoundError:
+        messagebox.showerror(title="Error", message="No data file found!")
+
 def save():
     if form_is_valid():
         website = entry_website.get()
@@ -62,7 +74,6 @@ def form_is_valid():
             return False
 
     # TODO: stretch - check for existing entry for a given website before saving
-
     return True
 
 def reset_form():
